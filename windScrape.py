@@ -36,8 +36,14 @@ def getVelocity():
 	# User-Agent (this is cheating, ok?)
 	br.addheaders = [('User-agent', 'Android / Firefox 29: Mozilla/5.0 (Android; Mobile; rv:29.0) Gecko/29.0 Firefox/29.0')]
 
-	#webpage to open
-	r = br.open('https://example.com/')
+	#Open webpage, wifi was super spotty, so it retries forever
+	r = None
+	while r is None:
+		try:
+			r = br.open('https://example.com/')
+		except:
+			sleep(2)
+			pass
 	webpage = html.fromstring(r.read())
 
 	#Querying the webpage using XPath
